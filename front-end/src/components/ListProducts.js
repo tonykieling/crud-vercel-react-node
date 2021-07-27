@@ -36,6 +36,9 @@ const AddProduct = () => {
               action: "name"
             }
         });
+console.log("receiving data = ", getData.data.content);
+
+
 
         if (getData.data.content)
           setProducts(getData.data.content);

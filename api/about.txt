@@ -14,6 +14,22 @@ A valid trategy is:
  - [queryInput].js also can be a general entrance which will will receive from /api/test and have a variable called queryInput coming from req.query.queryInput. After that, can chech whether there are body aor other flags to send for the correct function.
 
 Still remains an issue:
-- when pressing enter or f5 in the browser, the request it is not anymore for the app, but browser will send to vercel.
+- when pressing enter or f5 in the browser, the request it is not anymore send to the app, but browser will send to vercel, which does not recognizes the path.
   that means, it only works for the home page, i.e. localhost:3000
 
+Solution to both APIs routes and App routes is below.
+The "workaround" is having an index.js file at /api which will routes to the specific funtion, working alongside ehich the path used by app requests.
+
+vercel.json:
+{
+    "routes": [
+        {
+            "src": "/api",
+            "dest": "/api"
+        },
+        { 
+            "src": "/[^.]+", 
+            "dest": "/"
+        }
+    ]
+}

@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 module.exports = async(req, res) => {
-  console.log(" we get index.js!!!!!!!!");
+  console.log(" we get index.js!!!!!!!! ok");
   try {
     mongoose.connect(process.env.DB, {
       useNewUrlParser: true,
