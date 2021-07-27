@@ -1,0 +1,19 @@
+this file,
+[queryInput].js, and
+./code
+
+do not affect the current app.
+
+the last 2 are related to a specific test, regarding path segment.
+
+
+A valid trategy is:
+1- directory api
+2- a api/index.js which is a main entrance for the apis in general doing a switch/case
+3- having the directories according with their subject. i.e. product, client and the action files are there and called by index.js
+ - [queryInput].js also can be a general entrance which will will receive from /api/test and have a variable called queryInput coming from req.query.queryInput. After that, can chech whether there are body aor other flags to send for the correct function.
+
+Still remains an issue:
+- when pressing enter or f5 in the browser, the request it is not anymore for the app, but browser will send to vercel.
+  that means, it only works for the home page, i.e. localhost:3000
+

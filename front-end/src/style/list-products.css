@@ -1,0 +1,96 @@
+.num-head {
+  width: 2rem;
+}
+
+.name-head {
+  width: 15rem;
+}
+
+.others-head {
+  width: 5rem;
+}
+
+table {
+  border: 1px solid grey;
+  border-collapse: collapse;
+}
+
+th {
+  border: 1px solid grey;
+  border-collapse: collapse;
+}
+
+td {
+  border: 1px solid grey;
+  border-collapse: collapse;
+}
+
+.set-center {
+  text-align: center;
+}
+
+.set-left {
+  padding-left: 0.5rem;
+}
+
+.icons {
+  text-align: center;
+  width: 3rem;
+}
+
+tr:nth-child(even){background-color: lightgreen;}
+
+tr:nth-child(odd){background-color: lightgoldenrodyellow;}
+
+tr:hover {background-color: salmon;}
+
+#color-head th {
+  background-color: lightskyblue;
+}
+
+.message {
+  width: 100%;  
+  /* border: 1px solid red; */
+  height: 2rem;
+  text-align: center;
+  color: red;
+  vertical-align: middle;
+  font-weight: bolder;
+}
+
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltip-text {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  top: -5px;
+  right: 115%;
+}
+
+.tooltip .tooltip-text::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  margin-top: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent transparent black;
+}
+
+.tooltip:hover .tooltip-text {
+  visibility: visible;
+}

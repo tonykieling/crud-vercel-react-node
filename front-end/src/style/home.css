@@ -1,0 +1,20 @@
+.home-settings {
+  text-align: center;
+  padding: 3rem;
+}
+
+.li-position {
+  margin-left: 8rem;
+}
+
+ul {
+  list-style-type: none;
+  /* margin: 3rem 6rem; */
+  text-align: left;
+}
+
+.list-position {
+  padding-top: 1rem;
+  width: fit-content;
+  margin: auto;
+}
