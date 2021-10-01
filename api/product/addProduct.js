@@ -1,3 +1,4 @@
+const mongoose    = require("mongoose");
 
 // function to add a new product
 module.exports = async(req, res) => {
@@ -12,7 +13,7 @@ module.exports = async(req, res) => {
   // *** FE does it, but here is a double checking
   if (!name) return res.status(400).json({ error: "name is mandatory, please" });
 
-
+console.log("ADD PRODUCT: ", req.body);
   //go to record into database
   try {
     const newProduct = new Product({
@@ -25,7 +26,7 @@ module.exports = async(req, res) => {
     });
 
     await newProduct.save();
-
+console.log("newProduct:::", newProduct);
     return res.status(200).json({
       message : "success",
       content : newProduct

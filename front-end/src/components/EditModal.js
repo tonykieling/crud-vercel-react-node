@@ -2,6 +2,7 @@ import { useState } from "react";
 import ReactModal from "react-modal";
 import "../style/modal.css";
 import axios from "axios";
+import { GiSandsOfTime } from "react-icons/gi";
 
 const customStyle = {
   content : {
@@ -15,10 +16,14 @@ const customStyle = {
   }
 };
 
+const savingData = (
+  <b> Saving data... <GiSandsOfTime /></b>
+);
 
 const EditModal = props => {
   const [{ _id, name, weight, height, width, depth }, setState] = useState(props.product);
   const [message, setMessage] = useState("");
+  const [saveBtDisabled, setSaveBtDisabled] = useState(false);
 
   const handleChangeData = event => {
     const { name, value } = event.target;
@@ -31,6 +36,9 @@ const EditModal = props => {
 
 
   const saveNewData = async() => {
+    setMessage(savingData);
+    setSaveBtDisabled(true);
+
     const data = {
       _id,
       name,
@@ -54,6 +62,7 @@ const EditModal = props => {
 
       props.changeProduct(data);
 
+      setSaveBtDisabled(false);
       if (changeProduct.data.message)
         setMessage(changeProduct.data.message);
       else setMessage(changeProduct.data.error);
@@ -88,7 +97,8 @@ const EditModal = props => {
               name      = "name"
               value     = { name }
               onChange  = { handleChangeData }
-            ></input>
+              disabled = { saveBtDisabled }
+            />
           </div>
 
           <div>
@@ -100,7 +110,8 @@ const EditModal = props => {
               name        = "weight"
               value       = { weight }
               onChange    = { handleChangeData}
-            ></input>
+              disabled = { saveBtDisabled }
+            />
             <span className = "units">Kg</span>
           </div>
 
@@ -116,8 +127,8 @@ const EditModal = props => {
               name        = "height"
               value       = { height }
               onChange    = { handleChangeData}
-            >
-            </input>
+              disabled = { saveBtDisabled }
+            />
             <span className = "units">cm</span>
           </div>
 
@@ -130,8 +141,8 @@ const EditModal = props => {
               name        = "width"
               value       = { width }
               onChange    = { handleChangeData}
-            >
-            </input>
+              disabled = { saveBtDisabled }
+            />
             <span className = "units">cm</span>
           </div>
 
@@ -144,8 +155,8 @@ const EditModal = props => {
               name        = "depth"
               value       = { depth }
               onChange    = { handleChangeData}
-            >
-            </input>
+              disabled = { saveBtDisabled }
+            />
             <span className = "units">cm</span>
           </div>
         </form>
@@ -155,8 +166,25 @@ const EditModal = props => {
         </div>
 
         <div className="d-flex flex-column bt-position">
-          <button className = "bt-style close" onClick = {() => props.closeModal()} >Close</button>
-          <button className = "bt-style save" onClick = {() => saveNewData()}>Save</button>
+          <button 
+            // className = "bt-style close" 
+            // className = {`bt-style close ${ saveBtDisabled ? "disabled-bt-style" : "" }`}
+            className = {`${ saveBtDisabled ? "disabled-bt-style" : "bt-style close" }`}
+            // style = { saveBtDisabled ? "disabled-bt-style" : ""}
+            onClick = {() => props.closeModal()} 
+            disabled = { saveBtDisabled }
+          >
+            Close
+          </button>
+          <button 
+            // className = "bt-style save" 
+            className = {`${ saveBtDisabled ? "disabled-bt-style" : "bt-style save" }`}
+            // style = { saveBtDisabled ? "disabled-bt-style" : ""}
+            onClick = {() => saveNewData()}
+            disabled = { saveBtDisabled }
+          >
+            Save
+          </button>
         </div>
       </>
     </ReactModal>

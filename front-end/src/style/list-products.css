@@ -51,7 +51,7 @@ tr:hover {background-color: salmon;}
 .message {
   width: 100%;  
   /* border: 1px solid red; */
-  height: 2rem;
+  /* height: 2rem; */
   text-align: center;
   color: red;
   vertical-align: middle;

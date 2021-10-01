@@ -56,6 +56,8 @@ const AddProduct = () => {
       const data = product;
 
       try {
+console.log("sending to server:::", data);
+        setBtLabel("Processing...");
         const record = await axios.post( 
           url,
           data,
@@ -64,7 +66,7 @@ const AddProduct = () => {
               "Content-Type": "application/json"
             }
         });
-        
+console.log("receiving from server:::", record);
         if (record.data.message)
           setBtLabel(butonLabel);
         

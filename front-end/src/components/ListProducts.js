@@ -3,13 +3,57 @@ import axios from "axios";
 import "../style/list-products.css";
 import { FaTrash } from "react-icons/fa";
 import { FaEdit } from "react-icons/fa";
+import { RiDatabase2Line } from "react-icons/ri";
+import { FcSearch } from "react-icons/fc";
 import EditModal from "./EditModal.js";
+import { Link } from "react-router-dom";
 
 
 const url = "/api";
-const noData = <tr><td colSpan="7" style = {{textAlign: "center"}}>No products right now.</td></tr>
 
-const AddProduct = () => {
+const properStyle = {
+  textAlign: "center",  
+  fontWeight: "bold",
+  padding: "1rem"
+}
+
+const noData = (
+  <tr>
+    <td 
+      colSpan="7" 
+      style = {
+        {
+          ...properStyle, 
+          color: "red"
+        }
+      }
+    >
+      <p>DB is empty. <RiDatabase2Line color = "gray"/></p>
+      <p>Add new products by clicking in </p>
+      <p><Link to = "/addProduct"><span style={{color: "blue"}}>Add a new Product</span></Link></p>
+    </td>
+  </tr>
+);
+
+const processing = (
+  <tr>
+    <td
+      colSpan = "7"
+      style = {
+        {
+          ...properStyle,
+          color: "green",
+          padding: "2rem"
+        }
+      }
+    >
+      <FcSearch /> Processing the db request...
+    </td>
+  </tr>
+);
+
+
+const ListProduct = () => {
 
   const [products, setProducts] = useState("");
 
@@ -23,6 +67,8 @@ const AddProduct = () => {
 
 
   useEffect(() => {
+    setDataTable(processing);
+
     const fetchData = async() => {
   
       try {
@@ -36,15 +82,15 @@ const AddProduct = () => {
               action: "name"
             }
         });
-console.log("receiving data = ", getData.data.content);
-
-
 
         if (getData.data.content)
           setProducts(getData.data.content);
-        
+        else
+          throw new Error();
+          
         } catch (error) {
-          console.log("### error post", error);
+          // console.log("### error post", error.message);
+          setDataTable(null);
         }
     }
 
@@ -77,10 +123,12 @@ console.log("receiving data = ", getData.data.content);
 
 
   const deleteProduct = async(product) => {
-    const wannaDelete = window.confirm(`Are you sure you want to delete - ${product.name} - ?`);
-    if (wannaDelete === true) {
+    const wannaDelete = window.prompt(`Type product's name (${product.name}) to confirm you wanna delete it:`);
+
+    if (wannaDelete === product.name) {
       const data = { productId: product._id };
       try {
+        setMessage("Deleting...");
         const deleteProduct = await axios.delete( 
           url,
           {  
@@ -95,17 +143,19 @@ console.log("receiving data = ", getData.data.content);
 
           const newProducts = updateProducts("remove", product._id);
           setProducts(newProducts);
-        } else setMessage(deleteProduct.data.error);
+        } else 
+          throw new Error(deleteProduct.data.error);
+          // setMessage(deleteProduct.data.error);
 
         setTimeout(() => {
           setMessage("");
-        }, 2500);
+        }, 3000);
         
         } catch (error) {
-          console.log("### error post", error);
+          setMessage(error.message || "Something bad happened, please try again later. ;)");
         }
-    }
-
+    } else
+      window.alert(`\nWrong product's name.\n\n  You typed: ${wannaDelete || "<empty>"}\n  It has to be: ${product.name}`);
   };
 
 
@@ -192,11 +242,11 @@ console.log("receiving data = ", getData.data.content);
           </tr>
         </thead>
         <tbody>
-          { ( dataTable && dataTable.length ) ? dataTable : noData}
+          { dataTable || noData }
         </tbody>
       </table>
     </div>
   );
 };
 
-export default AddProduct;
+export default ListProduct;

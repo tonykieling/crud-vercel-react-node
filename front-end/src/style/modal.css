@@ -33,3 +33,19 @@
 .bt-position {
   text-align: center;
 }
+
+.disabled-bt-style {
+  padding: 15px 32px;
+  border: 1px solid black;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  margin: 2rem auto 0;
+  color: darkgrey;
+  background-color: grey;
+  cursor: wait;
+};
+
+.disabled-bt-style:hover {
+  box-shadow: none;
+}
