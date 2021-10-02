@@ -51,13 +51,27 @@ tr:hover {background-color: salmon;}
 .message {
   width: 100%;  
   /* border: 1px solid red; */
-  /* height: 2rem; */
-  text-align: center;
-  color: red;
-  vertical-align: middle;
+  height: 3rem;
+  /* text-align: center; */
+  /* color: red; */
+  /* vertical-align: middle; */
   font-weight: bolder;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
+.message-blue {
+  color: blue;
+}
+
+.message-green {
+  color: green;
+}
+
+.message-red {
+  color: red;
+}
 
 .tooltip {
   position: relative;

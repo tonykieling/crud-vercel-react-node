@@ -1,4 +1,4 @@
-// this is the definition/shape of contacts should like in the application
+// this is the definition/shape that a product should like in the application
 const mongoose = require("mongoose");
 
 const productSchema = mongoose.Schema({

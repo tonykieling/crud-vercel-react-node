@@ -25,6 +25,8 @@ const EditModal = props => {
   const [message, setMessage] = useState("");
   const [saveBtDisabled, setSaveBtDisabled] = useState(false);
 
+  const [colorMessage, setColorMessage] = useState("");
+
   const handleChangeData = event => {
     const { name, value } = event.target;
 
@@ -32,12 +34,43 @@ const EditModal = props => {
       ...prevState, 
       [name]: value
     }));
-  }
+
+    setMessage("");
+  };
+
+  // function to check whether there is data modification
+  const checkDataChanged = () => {
+    console.log("inside checing data");
+    console.log("props", props);
+    console.log("name", name, name === props.product.name, "weight", weight, "height", height, "width", width, "depth", depth)
+    return (
+      (
+        name !== props.product.name || 
+        weight !== props.product.weight ||
+        height !== props.product.height ||
+        width !== props.product.width ||
+        depth !== props.product.depth
+      )
+        ? true
+        : false
+    );
+  };
 
 
   const saveNewData = async() => {
+    
+    const changes = checkDataChanged();
+    console.log("changes", changes);
+    if (!changes) {
+      console.log("no changes");
+      setColorMessage("message-blue");
+      setMessage("No data to be changed");
+      return;
+    }
+    
     setMessage(savingData);
     setSaveBtDisabled(true);
+    setColorMessage("message-green");
 
     const data = {
       _id,
@@ -63,13 +96,17 @@ const EditModal = props => {
       props.changeProduct(data);
 
       setSaveBtDisabled(false);
-      if (changeProduct.data.message)
+      if (changeProduct.data.message) {
+        setColorMessage("message-blue");
         setMessage(changeProduct.data.message);
-      else setMessage(changeProduct.data.error);
+      } else {
+        setColorMessage("message-red");
+        setMessage(changeProduct.data.error);
+      } 
 
-      setTimeout(() => {
-        setMessage("");
-      }, 2500);
+      // setTimeout(() => {
+      //   setMessage("");
+      // }, 2500);
 
     }catch(error){
       console.log("error:", error.message || error);
@@ -161,10 +198,6 @@ const EditModal = props => {
           </div>
         </form>
 
-        <div className = "message">
-          <p> { message }</p>
-        </div>
-
         <div className="d-flex flex-column bt-position">
           <button 
             // className = "bt-style close" 
@@ -185,6 +218,12 @@ const EditModal = props => {
           >
             Save
           </button>
+        </div>
+
+        {/* <div className = "message"> */}
+        <div className = {`message ${colorMessage}`}>
+          <p> { message }</p>
+          {/* { message } */}
         </div>
       </>
     </ReactModal>

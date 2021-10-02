@@ -108,7 +108,7 @@ console.log("receiving from server:::", record);
             onChange  = { handleChangeData }
             ref       = { refName }
             disabled  = { disableFormController }
-          ></input>
+          />
         </div>
 
         <div>
@@ -121,7 +121,7 @@ console.log("receiving from server:::", record);
             value       = { product.weight }
             onChange    = { handleChangeData}
             disabled    = { disableFormController }
-          ></input>
+          />
           <span className = "units">Kg</span>
         </div>
 
@@ -137,8 +137,8 @@ console.log("receiving from server:::", record);
             name        = "height"
             value       = { product.height }
             onChange    = { handleChangeData}
-            disabled    = { disableFormController }>
-          </input>
+            disabled    = { disableFormController }
+          />
           <span className = "units">cm</span>
         </div>
 
@@ -151,8 +151,8 @@ console.log("receiving from server:::", record);
             name        = "width"
             value       = { product.width }
             onChange    = { handleChangeData}
-            disabled    = { disableFormController }>
-          </input>
+            disabled    = { disableFormController }
+          />
           <span className = "units">cm</span>
         </div>
 
@@ -165,8 +165,8 @@ console.log("receiving from server:::", record);
             name        = "depth"
             value       = { product.depth }
             onChange    = { handleChangeData}
-            disabled    = { disableFormController }>
-          </input>
+            disabled    = { disableFormController }
+          />
           <span className = "units">cm</span>
         </div>
 
@@ -175,6 +175,7 @@ console.log("receiving from server:::", record);
             type = "submit"
             className = { btColor }
             onClick = { saveProduct }
+            disabled    = { disableFormController }
           > { btLabel }
           </button>
         </div>

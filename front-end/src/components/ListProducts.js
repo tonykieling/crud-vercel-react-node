@@ -30,7 +30,7 @@ const noData = (
     >
       <p>DB is empty. <RiDatabase2Line color = "gray"/></p>
       <p>Add new products by clicking in </p>
-      <p><Link to = "/addProduct"><span style={{color: "blue"}}>Add a new Product</span></Link></p>
+      <p><Link to = "/addProduct"><span style={{color: "blue"}}>Add Product</span></Link></p>
     </td>
   </tr>
 );

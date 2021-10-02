@@ -6,9 +6,10 @@
   text-align: center;
   text-decoration: none;
   font-size: 16px;
-  margin: 2rem auto 0;
+  /* margin: 0 auto; */
   cursor: pointer;
   transition-duration: 0.4s;
+  margin: 3rem auto 1rem;
 }
 
 .bt-style.close {
@@ -32,6 +33,7 @@
 
 .bt-position {
   text-align: center;
+  /* margin: 2rem auto 1rem; */
 }
 
 .disabled-bt-style {
@@ -40,7 +42,7 @@
   text-align: center;
   text-decoration: none;
   font-size: 16px;
-  margin: 2rem auto 0;
+  margin: 3rem auto 1rem;
   color: darkgrey;
   background-color: grey;
   cursor: wait;
