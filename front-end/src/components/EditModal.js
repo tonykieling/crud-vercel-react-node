@@ -40,9 +40,6 @@ const EditModal = props => {
 
   // function to check whether there is data modification
   const checkDataChanged = () => {
-    console.log("inside checing data");
-    console.log("props", props);
-    console.log("name", name, name === props.product.name, "weight", weight, "height", height, "width", width, "depth", depth)
     return (
       (
         name !== props.product.name || 
@@ -60,9 +57,7 @@ const EditModal = props => {
   const saveNewData = async() => {
     
     const changes = checkDataChanged();
-    console.log("changes", changes);
     if (!changes) {
-      console.log("no changes");
       setColorMessage("message-blue");
       setMessage("No data to be changed");
       return;
@@ -103,10 +98,6 @@ const EditModal = props => {
         setColorMessage("message-red");
         setMessage(changeProduct.data.error);
       } 
-
-      // setTimeout(() => {
-      //   setMessage("");
-      // }, 2500);
 
     }catch(error){
       console.log("error:", error.message || error);
@@ -200,19 +191,14 @@ const EditModal = props => {
 
         <div className="d-flex flex-column bt-position">
           <button 
-            // className = "bt-style close" 
-            // className = {`bt-style close ${ saveBtDisabled ? "disabled-bt-style" : "" }`}
             className = {`${ saveBtDisabled ? "disabled-bt-style" : "bt-style close" }`}
-            // style = { saveBtDisabled ? "disabled-bt-style" : ""}
             onClick = {() => props.closeModal()} 
             disabled = { saveBtDisabled }
           >
             Close
           </button>
           <button 
-            // className = "bt-style save" 
             className = {`${ saveBtDisabled ? "disabled-bt-style" : "bt-style save" }`}
-            // style = { saveBtDisabled ? "disabled-bt-style" : ""}
             onClick = {() => saveNewData()}
             disabled = { saveBtDisabled }
           >
@@ -220,10 +206,8 @@ const EditModal = props => {
           </button>
         </div>
 
-        {/* <div className = "message"> */}
         <div className = {`message ${colorMessage}`}>
           <p> { message }</p>
-          {/* { message } */}
         </div>
       </>
     </ReactModal>

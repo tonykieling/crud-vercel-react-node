@@ -26,7 +26,6 @@ const Product = mongoose.model("Product", mongoose.Schema(
 
 
 module.exports = async(req, res) => {
-  console.log(" we get index.js!!!!!!!! ok");
   try {
     mongoose.connect(process.env.DB, {
       useNewUrlParser: true,
@@ -35,11 +34,10 @@ module.exports = async(req, res) => {
 
       const { method } = req;
       switch (method) {
+
+        // this option will process the queries
         case "GET":
           {
-            // console.log("receiving get");
-            // const getProducts = require("./product/getProduct.js");
-            // await getProducts(req, res);
             try {
               const products = await Product
                 .find();
@@ -49,26 +47,21 @@ module.exports = async(req, res) => {
                 length  : products.length,
                 content : products
               });
-            // return res.json({});
+
             } catch(error) {
-              // console.log("GP01 error:", error.message || error);
               return res.status(400).json({ error: "something bad when getting data. :/"});
             }
           }
-          // break;
 
+        // it will add products
         case "POST":
           {
-            // console.log("receiving PoSt");
-            // const postProducts = require("./product/addProduct.js");
-            // await postProducts(req, res);
             const { name, weight, height, width, depth } = req.body;
           
             // it checks whether data is being received
             // *** FE does it, but here is a double checking
             if (!name) return res.status(400).json({ error: "name is mandatory, please" });
           
-          // console.log("ADD PRODUCT: ", req.body);
             //go to record into database
             try {
               const newProduct = new Product({
@@ -81,32 +74,26 @@ module.exports = async(req, res) => {
               });
           
               await newProduct.save();
-          // console.log("newProduct:::", newProduct);
+
               return res.status(200).json({
                 message : "success",
                 content : newProduct
               });
           
             } catch(error) {
-              // console.log("AP01 error:", error.message || error);
               return res.status(400).json({ error: "something bad when recording. :/"});
             }
-            // break;
           }
 
+        // it updates product's data
         case "PATCH":
-          console.log("receiving PATCH");
-          // const patchProducts = require("./product/updateProduct.js");
-          // await patchProducts(req, res);
           try {
             let { _id, name, weight, height, width, depth } = req.body;
-          // console.log("req.body", typeof req.body.depth)
+
             weight = Number(weight) || undefined;
             height = Number(height) || undefined;
             width = Number(width) || undefined;
             depth = Number(depth) || undefined;
-        
-            console.log("===>", _id, name, weight, height, width, depth);
         
             const productToBeChanged = await Product
             .updateOne(
@@ -126,19 +113,45 @@ module.exports = async(req, res) => {
               }
             );
         
-              console.log("productToBeChanged", productToBeChanged.nModified)
             return res.json(productToBeChanged.nModified ? {message: "Product updated!"} : {message: "No changes to be performed."});
           }catch(error){
-            console.log("ERRROR", error.message || error);
             return res.json({error: "Error, please try again later."});
           }
-          // break;
 
+
+        // it deletes product
         case "DELETE":
-          console.log("receiving deLEte");
-          const removeProducts = require("./product/removeProduct.js");
-          await removeProducts(req, res);
-          break;
+          const { productId } = req.body;
+
+          // check whether product exists
+          try {
+            const productToBeDeleted = await Product
+              .findById(productId);
+        
+            if (!productToBeDeleted || productToBeDeleted.length < 1)
+              throw (`RP01: Product NOT found.`);
+          } catch(err) {
+            return res.json({
+              error: err
+            });
+          }
+          
+          // delete product
+          try {
+            const productDeleted = await Product.deleteOne({ _id: productId});
+        
+            if (productDeleted.deletedCount) {      
+              return res.json({
+                success: "Product has been deleted"
+              });
+            } else
+              throw (`RP02: Something bad with Product id <${productId}>`);
+        
+          } catch (err) {
+            return res.json({
+              error: err
+            });
+          }
 
         default:
           res.setHeader("Allow", ["GET", "POST", "PATCH", "DELETE"]);
@@ -146,10 +159,8 @@ module.exports = async(req, res) => {
       }
 
   } catch (err) {
-    console.log("### error on MongoDB connection");
-    console.log(err.message);
+    return res.json({ error: `CODE 78: ${err.message || err}`});
   } finally {
-    console.log(" Ending DB");
     mongoose.disconnect();
   }
 };

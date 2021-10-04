@@ -47,7 +47,7 @@ const processing = (
         }
       }
     >
-      <FcSearch /> Processing the db request...
+      <FcSearch /> Processing DB query...
     </td>
   </tr>
 );
@@ -60,6 +60,7 @@ const ListProduct = () => {
   const [dataTable, setDataTable] = useState("");
 
   const [message, setMessage] = useState("");
+  const [colorMessage, setColorMessage] = useState("");
 
   const [callEditModal, setCallEditModal] = useState(false);
 
@@ -129,6 +130,7 @@ const ListProduct = () => {
       const data = { productId: product._id };
       try {
         setMessage("Deleting...");
+        setColorMessage("message-green");
         const deleteProduct = await axios.delete( 
           url,
           {  
@@ -139,6 +141,7 @@ const ListProduct = () => {
         });
 
         if (deleteProduct.data.success) {
+          setColorMessage("message-blue");
           setMessage(`Product "${product.name}" has been deleted successfully!`);
 
           const newProducts = updateProducts("remove", product._id);
@@ -149,9 +152,10 @@ const ListProduct = () => {
 
         setTimeout(() => {
           setMessage("");
-        }, 3000);
+        }, 4000);
         
         } catch (error) {
+          setColorMessage("message-red");
           setMessage(error.message || "Something bad happened, please try again later. ;)");
         }
     } else
@@ -222,7 +226,7 @@ const ListProduct = () => {
 
       <h2 className = "main-title"> List Products page</h2>
 
-      <div className = "message">
+      <div className = {`message ${colorMessage}`}>
           <p> { message }</p>
       </div>
 
